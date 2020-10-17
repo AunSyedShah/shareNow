@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+<!--writing area-->
+{%block container%}
+<table class="table">
+    <form action="" method="POST">
+        {{ form.csrf_token }}
+        <tr>
+            <td>{{form.username.label}}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{form.submit}}</td>
+        </tr>
+    </form>
+</table>
+{%endblock container%}
