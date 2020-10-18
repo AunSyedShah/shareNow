@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import Length, Email, EqualTo, InputRequired
+from wtforms.validators import Length, Email, EqualTo, InputRequired, ValidationError
+from .models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -16,3 +17,12 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField("Confirm Password", validators=[
                                      InputRequired(), EqualTo("password", message="Password must match")])
     submit = SubmitField("Register")
+
+    # custom validators
+
+    # custom validator to check for a duplicate username
+    def validate_username(self, username):
+        # check existing username
+        user_object = User.query.filter_by(username=username.data).first()
+        if user_object:
+            raise ValidationError("Username already taken")
