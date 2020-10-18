@@ -11,4 +11,6 @@ def index():
 @app.route("/registration", methods=['GET', 'POST'])
 def registration():
     registration_form = RegistrationForm()
+    if registration_form.validate_on_submit():
+        return redirect(url_for("index"))
     return render_template("registration.html", form=registration_form)

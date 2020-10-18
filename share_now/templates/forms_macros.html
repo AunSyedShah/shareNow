@@ -1,0 +1,15 @@
+{% macro generateField(fieldName) %}
+<div class="form-group">
+    {{fieldName.label}}
+    {{fieldName(class_='form-control')}}
+    <!-- error messages -->
+    {% if fieldName.errors %}
+    <ul>
+        {% for error in fieldName.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!--error message ended-->
+</div>
+{% endmacro %}
