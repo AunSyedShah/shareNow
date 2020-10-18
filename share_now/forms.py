@@ -8,7 +8,7 @@ def invalid_credentials(form, field):
     """
     invalid credentials handling validator
     """
-    username_entered = str(form.username.data)
+    username_entered = str(form.username.data).lower()
     password_entered = str(field.data)
 
     # check existing username
@@ -41,6 +41,13 @@ class RegistrationForm(FlaskForm):
         user_object = User.query.filter_by(username=username.data).first()
         if user_object:
             raise ValidationError("Username already taken")
+    def validate_email(self, email):
+        """
+        check existing email
+        """
+        user_email = User.query.filter_by(email=email.data).first()
+        if user_email:
+            raise ValidationError("email already taken")
 
 
 class LoginForm(FlaskForm):

@@ -14,9 +14,9 @@ def registration():
     reg_form = RegistrationForm()
     if reg_form.validate_on_submit():
         # queries must be conveted into string before inserted in the database
-        username_entered = str(reg_form.username.data)
+        username_entered = str(reg_form.username.data).lower()
         password_entered = str(reg_form.password.data)
-        email_entered = str(reg_form.email.data)
+        email_entered = str(reg_form.email.data).lower()
 
         # add user to db
         addUser = User(username=username_entered,
