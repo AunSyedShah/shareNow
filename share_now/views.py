@@ -1,5 +1,5 @@
 from . import app, db
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from flask import render_template, url_for, redirect
 from .models import User
 
@@ -23,5 +23,14 @@ def registration():
                        email=email_entered, password=password_entered)
         db.session.add(addUser)
         db.session.commit()
-        return "Inserted into database"
+        return redirect(url_for("login"))
     return render_template("registration.html", form=reg_form)
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        return "Logged in, successfully"
+
+    return render_template("login.html", form=login_form)

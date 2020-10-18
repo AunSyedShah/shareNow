@@ -1,0 +1,15 @@
+{% from 'forms_macros.html' import generateField %}
+{% extends "base.html" %}
+
+{%block title%}Login | {%endblock title%}
+<!--writing area-->
+{%block container%}
+<form action="{{ url_for('login') }}" method="POST">
+    {{ generateField(form.username)}}
+    {{ generateField(form.password)}}
+    {{form.submit(class_='btn btn-primary')}}
+
+
+    {{ form.csrf_token }}
+</form>
+{%endblock container%}
