@@ -2,16 +2,11 @@
 
 <!--writing area-->
 {%block container%}
-<table class="table">
-    <form action="" method="POST">
-        {{ form.csrf_token }}
-        <tr>
-            <td>{{form.username.label}}</td>
-            <td>{{ form.username }}</td>
-        </tr>
-        <tr>
-            <td>{{form.submit}}</td>
-        </tr>
-    </form>
-</table>
+<form action="" method="POST">
+    {{ form.csrf_token }}
+    <div class="form-group">
+        {{form.username.label}}
+        {{form.username(class_='form-control')}}
+    </div>
+</form>
 {%endblock container%}
