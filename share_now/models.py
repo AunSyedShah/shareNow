@@ -1,7 +1,9 @@
 from share_now import db
+# step 2
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """
     User Model
     """

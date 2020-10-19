@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Length, Email, EqualTo, InputRequired, ValidationError
 from .models import User
+from passlib.hash import pbkdf2_sha256
 
 
 def invalid_credentials(form, field):
@@ -9,13 +10,13 @@ def invalid_credentials(form, field):
     invalid credentials handling validator
     """
     username_entered = str(form.username.data).lower()
-    password_entered = str(field.data)
+    password_entered = field.data
 
     # check existing username
     user_object = User.query.filter_by(username=username_entered).first()
     if user_object is None:
         raise ValidationError("Username or Password is incorrect")
-    elif password_entered != user_object.password:
+    elif not pbkdf2_sha256.verify(password_entered, user_object.password):
         raise ValidationError("Username or Password is incorrect")
 
 
@@ -41,13 +42,14 @@ class RegistrationForm(FlaskForm):
         user_object = User.query.filter_by(username=username.data).first()
         if user_object:
             raise ValidationError("Username already taken")
+
     def validate_email(self, email):
         """
         check existing email
         """
         user_email = User.query.filter_by(email=email.data).first()
         if user_email:
-            raise ValidationError("email already taken")
+            raise ValidationError("email already registered")
 
 
 class LoginForm(FlaskForm):
