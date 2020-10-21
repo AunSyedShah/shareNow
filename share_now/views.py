@@ -1,10 +1,11 @@
 from . import app, db
 from .forms import RegistrationForm, LoginForm
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, flash, request
 from .models import User
 from passlib.hash import pbkdf2_sha256
 from flask_login import login_user, current_user, logout_user
 from share_now import login_man
+
 
 # user loader function
 
